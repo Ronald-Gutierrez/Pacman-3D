@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <shader_m.h>
 #include <iostream>
+#include <vector>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -18,19 +19,19 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f, 7.0f);
+glm::vec3 cameraPos   = glm::vec3(7.0f, 7.0f, 7.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f, 0.0f);
 
 bool firstMouse = true;
-float yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+float yaw   = -90.0f;    // yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 float pitch =  0.0f;
 float lastX =  800.0f / 2.0;
 float lastY =  600.0 / 2.0;
 float fov   =  45.0f;
 
 // timing
-float deltaTime = 0.0f;	// time between current frame and last frame
+float deltaTime = 0.0f;    // time between current frame and last frame
 float lastFrame = 0.0f;
 
 int main()
@@ -124,46 +125,41 @@ int main()
         -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
-    // world space positions of our cubes
-    glm::vec3 cubePositions[] = {
-        //izquierdo
-        glm::vec3( 0.0f,  -5.0f,  0.0f),
-        glm::vec3( 0.0f,  -5.0f, -1.0f),
-        glm::vec3( 0.0f,  -5.0f, -2.0f),
-        glm::vec3( 0.0f,  -5.0f, -3.0f),
-        glm::vec3( 0.0f,  -5.0f, -4.0f),
-        glm::vec3( 0.0f,  -5.0f, -5.0f),
-        glm::vec3( 0.0f,  -5.0f, -6.0f),
-        glm::vec3( 0.0f,  -5.0f, -7.0f),
-        //delante
-        glm::vec3( 1.0f,  -5.0f,  0.0f),
-        glm::vec3( 2.0f,  -5.0f,  0.0f),
-        glm::vec3( 3.0f,  -5.0f,  0.0f),
-        glm::vec3( 4.0f,  -5.0f,  0.0f),
-        glm::vec3( 5.0f,  -5.0f,  0.0f),
-        glm::vec3( 6.0f,  -5.0f,  0.0f),
-        glm::vec3( 7.0f,  -5.0f,  0.0f),
-        glm::vec3( 8.0f,  -5.0f,  0.0f),
-        //derecho
-        glm::vec3( 8.0f,  -5.0f,  -1.0f),
-        glm::vec3( 8.0f,  -5.0f,  -2.0f),
-        glm::vec3( 8.0f,  -5.0f,  -3.0f),
-        glm::vec3( 8.0f,  -5.0f,  -4.0f),
-        glm::vec3( 8.0f,  -5.0f,  -5.0f),
-        glm::vec3( 8.0f,  -5.0f,  -6.0f),
-        glm::vec3( 8.0f,  -5.0f,  -7.0f),
-        glm::vec3( 8.0f,  -5.0f,  -8.0f),
-        //atras
-        glm::vec3( 0.0f,  -5.0f,  -8.0f),
-        glm::vec3( 1.0f,  -5.0f,  -8.0f),
-        glm::vec3( 2.0f,  -5.0f,  -8.0f),
-        glm::vec3( 3.0f,  -5.0f,  -8.0f),
-        glm::vec3( 4.0f,  -5.0f,  -8.0f),
-        glm::vec3( 5.0f,  -5.0f,  -8.0f),
-        glm::vec3( 6.0f,  -5.0f,  -8.0f),
-        glm::vec3( 7.0f,  -5.0f,  -8.0f),
 
+    // world space positions of our cubes
+    std::vector<std::vector<char>> map = {
+        { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X' },
+        { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', 'X' },
+        { 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', ' ', ' ', ' ', ' ', ' ', 'X',' ', 'X' },
+        { 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X',' ', 'X' },
+        { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', 'X' },
+        { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X' }
     };
+
+    // Tamaño de cada celda en el mapa
+    float cellSize = 1.0f;
+
+    // Recorrer el mapa y generar las posiciones de los cubos
+    std::vector<glm::vec3> cubePositions;
+    for (size_t i = 0; i < map.size(); i++) {
+        for (size_t j = 0; j < map[i].size(); j++) {
+            if (map[i][j] == 'X') {
+                float x = static_cast<float>(j) * cellSize;
+                float z = static_cast<float>(i) * cellSize;
+                cubePositions.push_back(glm::vec3(x, 0.0f, -z)); // Agregar posición al arreglo
+            }
+        }
+    }
+
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -177,7 +173,6 @@ int main()
     // texture coord attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-
 
     // load and create a texture 
     // -------------------------
@@ -218,7 +213,7 @@ int main()
     {
         // per-frame time logic
         // --------------------
-        float currentFrame = static_cast<float>(glfwGetTime());
+        float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
@@ -229,7 +224,7 @@ int main()
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // bind textures on corresponding texture units
         glActiveTexture(GL_TEXTURE0);
@@ -238,23 +233,18 @@ int main()
         // activate shader
         ourShader.use();
 
-        // pass projection matrix to shader (note that in this case it could change every frame)
+        // create transformations
         glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        ourShader.setMat4("projection", projection);
-
-        // camera/view transformation
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
         // render boxes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 32; i++)
+        for (unsigned int i = 0; i < cubePositions.size(); i++)
         {
-            // calculate the model matrix for each object and pass it to shader before drawing
-            glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            float angle = 0.0f * i;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -284,7 +274,7 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    float cameraSpeed = static_cast<float>(2.5 * deltaTime);
+    float cameraSpeed = 2.5 * deltaTime;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPos += cameraSpeed * cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -306,11 +296,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    float xpos = static_cast<float>(xposIn);
-    float ypos = static_cast<float>(yposIn);
-
     if (firstMouse)
     {
         lastX = xpos;
@@ -320,6 +307,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 
     float xoffset = xpos - lastX;
     float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
     lastX = xpos;
     lastY = ypos;
 
@@ -347,9 +335,10 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    fov -= (float)yoffset;
-    if (fov < 1.0f)
+    if (fov >= 1.0f && fov <= 45.0f)
+        fov -= yoffset;
+    if (fov <= 1.0f)
         fov = 1.0f;
-    if (fov > 45.0f)
+    if (fov >= 45.0f)
         fov = 45.0f;
 }
