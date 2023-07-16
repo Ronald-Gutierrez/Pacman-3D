@@ -166,7 +166,7 @@ int main()
     };
     //Nivel Medio 02
     //Mapa 01
-    std::vector<std::vector<char>> ma3  = {
+    std::vector<std::vector<char>> map3  = {
         { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X', 'X','X', 'X' },
         { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ',' ', 'X' },
         { 'X', ' ', 'X', 'X', 'X', ' ', 'X', 'X', 'X',' ', 'X', ' ', 'X',' ', 'X' },
@@ -264,6 +264,7 @@ int main()
         { 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ',' ', ' ', ' ', ' ',' ', 'X' },
         { 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X','X', 'X', 'X', 'X','X', 'X', 'X', 'X','X', 'X' },
     };
+    std::vector<std::vector<std::vector<char>>> maps = {map, map2, map3, map4, map5, map6};
 
     // Tamaño de cada celda en el mapa
     float cellSize = 1.0f;
@@ -328,11 +329,12 @@ int main()
     ourShader.setInt("texture1", 0);
 
     // render loop
-    // -----------
+    int currentMapIndex = 0;
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
         // --------------------
+
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -340,6 +342,8 @@ int main()
         // input
         // -----
         processInput(window);
+
+        // ...
 
         // render
         // ------
@@ -349,6 +353,8 @@ int main()
         // bind textures on corresponding texture units
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
 
         // activate shader
         ourShader.use();
@@ -359,12 +365,12 @@ int main()
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
-        // render boxes
+        // render the cubes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < cubePositions.size(); i++)
+        for (const auto& position : cubePositions)
         {
             glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, cubePositions[i]);
+            model = glm::translate(model, position);
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -372,6 +378,27 @@ int main()
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
+        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+        {
+            // Increment the index of the current map and wrap around if it exceeds the number of maps
+            currentMapIndex = (currentMapIndex + 1) % maps.size();
+            cubePositions.clear();
+
+            // Retrieve the new cube positions for the current map
+            const auto& currentMap = maps[currentMapIndex];
+            for (size_t i = 0; i < currentMap.size(); i++)
+            {
+                for (size_t j = 0; j < currentMap[i].size(); j++)
+                {
+                    if (currentMap[i][j] == 'X')
+                    {
+                        float x = static_cast<float>(j) * cellSize;
+                        float z = static_cast<float>(i) * cellSize;
+                        cubePositions.push_back(glm::vec3(x, 0.0f, -z)); // Add position to the array
+                    }
+                }
+            }
+        }
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
