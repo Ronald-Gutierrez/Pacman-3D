@@ -34,6 +34,30 @@ g++ -g --std=c++17 -I../include -L../lib ../src/*.cpp ../src/glad.c -lglfw3dll -
 ```shell
 ./main
 ```
+## Imagenes del Mapa
+### Nivel 01
+#### Mapa 1 y 2
+
+<div>
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel01-map1.jpg" alt="Imagen 1" width="300" height="300" style="float: left; margin-right: 20px;">
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel01-map2.jpg" alt="Imagen 2" width="300" height="300" style="float: left;">
+</div>
+
+### Nivel 02
+#### Mapa 1 y 2
+<div>
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel02-map1.jpg" alt="Imagen 1" width="300" height="300" style="float: left; margin-right: 20px;">
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel02-map2.jpg" alt="Imagen 2" width="300" height="300" style="float: left;">
+</div>
+
+### Nivel 03
+#### Mapa 1 y 2
+<div>
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel03-map1.jpg" alt="Imagen 1" width="300" height="300" style="float: left; margin-right: 20px;">
+  <img src="https://github.com/Ronald-Gutierrez/Pacman-3D/blob/main/img/Nivel03-map2.jpg" alt="Imagen 2" width="300" height="300" style="float: left;">
+</div>
+
+
 Disfruta del juego y desafía tus habilidades para completar los niveles y alcanzar la puntuación más alta.
 ## Contribuciones
 ¡Las contribuciones a este proyecto son bienvenidas! Si tienes alguna idea de mejora, corrección de errores o nuevas características, no dudes en hacer una solicitud de extracción o abrir un problema en el repositorio.
